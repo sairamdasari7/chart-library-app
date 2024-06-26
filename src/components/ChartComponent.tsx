@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Brush,
+} from 'recharts';
 import html2canvas from 'html2canvas';
 import { parseISO, startOfWeek, startOfMonth, format } from 'date-fns';
 import './ChartComponent.css';
@@ -81,7 +91,6 @@ const ChartComponent: React.FC = () => {
 
   return (
     <div className="chart-container">
-      <img src="/logo.png" alt="Logo" className="logo" />
       <div className="controls">
         <button onClick={() => setTimeframe('daily')}>Daily</button>
         <button onClick={() => setTimeframe('weekly')}>Weekly</button>
@@ -95,8 +104,9 @@ const ChartComponent: React.FC = () => {
             <XAxis dataKey="timestamp" />
             <YAxis />
             <Tooltip />
-            <Legend />
+            <Legend onClick={(e) => handleClick(e)} />
             <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Brush dataKey="timestamp" height={20} stroke="#8884d8" />
           </LineChart>
         </ResponsiveContainer>
       </div>
